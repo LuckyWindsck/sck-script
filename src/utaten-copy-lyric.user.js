@@ -1,54 +1,50 @@
 // ==UserScript==
-// @name         Get Lyric
+// @name         Utaten Copy Lyric
 // @namespace    LuckyWind
-// @version      0.1
-// @description  To get lyric from UtaTen
+// @version      0.2
+// @description  To copy lyric from UtaTen
 // @author       LuckyWind_sck
 // @include      https://utaten.com/lyric/*
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
+/* eslint no-irregular-whitespace: ["error", { "skipTemplates": true }] */
 (() => {
-  'use strict';
-  // Define function
-  const {log} = console;
-  const copyToClipboard = text => {
-      const temp = document.createElement("textarea");
-      document.body.appendChild(temp);
-      temp.appendChild(document.createTextNode(text));
-      temp.select();
-      document.execCommand("copy");
-      document.body.removeChild(temp);
-  }
+  const getCopyContent = () => {
+    const cloneLyricBody = document.querySelector('.lyricBody').cloneNode(true);
+    cloneLyricBody.querySelectorAll('.ruby span.rt').forEach((rt) => rt.remove());
 
-  // Create button to copy
-  const copyButton = document.createElement("a");
-  copyButton.appendChild(document.createTextNode("歌詞をコピーする"));
-  copyButton.classList.add("lnk_opinion");
-  copyButton.style.cursor = "pointer";
-  copyButton.addEventListener("click", () => {
-      const cloneLyricBody = document.querySelector(".lyricBody").cloneNode(true);
-      cloneLyricBody.querySelectorAll(".ruby").forEach(ruby => {
-          const rt = ruby.querySelectorAll(".rt")[0];
-          if (rt !== undefined) ruby.removeChild(rt);
-      });
-      let metadata = document.querySelector(".lyricWork").children;
-      metadata = document.querySelector(".movieTtl").innerText.replace("「","").replace("」の歌詞","").replace("\n","　")
-          + "\n"
-          + Array(metadata.length / 2).fill(0).map((e, i) => {
-              const dataPair = Array.from(metadata).map(e => e.innerText)
-              return `${dataPair[2*i]}　${dataPair[2*i+1]}`
-          }).join("\n");
-      copyToClipboard(metadata + "\n\n" + cloneLyricBody.querySelector(".hiragana").innerText.trim());
-  });
-  const lyricBody = document.querySelector(".lyricBody")
-  lyricBody.insertBefore(document.createElement("br"), lyricBody.children[0]);
+    const { title } = document.querySelector('.movieTtl_mainTxt').innerText.match(/「(?<title>.*?)」/).groups;
+    const artist = document.querySelector('.boxArea_artists_move_top').innerText;
+    const metadata = [...document.querySelector('.lyricWork').children].reduce((str, { classList, innerText }) => {
+      if (classList.contains('lyricWork__title')) return `${str}\n${innerText}`;
+      if (classList.contains('lyricWork__body')) return `${str}　${innerText}`;
+      return str;
+    }, '');
+    const lyric = cloneLyricBody.querySelector('.hiragana').innerText.trim();
+
+    return `${title}　${artist}${metadata}\n\n${lyric}`;
+  };
+
+  const copyToClipboard = (text) => {
+    const temp = document.createElement('textarea');
+    document.body.appendChild(temp);
+    temp.appendChild(document.createTextNode(text));
+    temp.select();
+    document.execCommand('copy');
+    document.body.removeChild(temp);
+  };
+
+  const content = getCopyContent();
+
+  const copyButton = document.createElement('a');
+  copyButton.appendChild(document.createTextNode('歌詞をコピーする'));
+  copyButton.classList.add('lnk_opinion');
+  copyButton.style.cursor = 'pointer';
+  copyButton.addEventListener('click', () => copyToClipboard(content));
+
+  const lyricBody = document.querySelector('.lyricBody');
+  lyricBody.insertBefore(document.createElement('br'), lyricBody.children[0]);
   lyricBody.insertBefore(copyButton, lyricBody.children[0]);
-  // const li = document.createElement("li");
-  // li.appendChild(copyButton);
-  // li.classList.add("lyricLink__item");
-
-  // const lyricLink = document.querySelector(".lyricLink");
-  // lyricLink.appendChild(li);
 })();

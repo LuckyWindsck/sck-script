@@ -5,10 +5,12 @@
 // @description  To copy lyric from UtaTen
 // @author       LuckyWind_sck
 // @include      https://utaten.com/lyric/*
+// @require      https://cdn.jsdelivr.net/npm/vue@2.6.12
 // @run-at       document-end
 // @grant        none
 // ==/UserScript==
 
+/* global Vue */
 /* eslint no-irregular-whitespace: ["error", { "skipTemplates": true }] */
 (() => {
   const getCopyContent = () => {
@@ -27,13 +29,15 @@
     return `${title}　${artist}${metadata}\n\n${lyric}`;
   };
 
-  const copyButton = document.createElement('a');
-  copyButton.appendChild(document.createTextNode('歌詞をコピーする'));
-  copyButton.classList.add('lnk_opinion');
-  copyButton.style.cursor = 'pointer';
-  copyButton.addEventListener('click', () => navigator.clipboard.writeText(getCopyContent()));
+  const copyLyric = function copyLyric() {
+    navigator.clipboard.writeText(getCopyContent());
+  };
+
+  const CopyButton = Vue.extend({
+    methods: { copyLyric },
+    template: '<div><a @click="copyLyric" class="lnk_opinion" style="cursor:pointer;">歌詞をコピーする</a><br></div>',
+  });
 
   const lyricBody = document.querySelector('.lyricBody');
-  lyricBody.insertBefore(document.createElement('br'), lyricBody.children[0]);
-  lyricBody.insertBefore(copyButton, lyricBody.children[0]);
+  lyricBody.insertBefore(new CopyButton().$mount().$el, lyricBody.children[0]);
 })();

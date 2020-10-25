@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         計算dsh0416小雞帶弓多久了
+// @name         Coderemixer AFK
 // @namespace    LuckyWind
 // @version      1.0.4
-// @description  Update slide / Auto answering
+// @description  計算 dsh0416 小雞帶弓多久了
 // @author       LuckyWind_sck
 // @match        https://coderemixer.com/
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.12

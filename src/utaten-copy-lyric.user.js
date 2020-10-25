@@ -2,7 +2,7 @@
 // @name         Utaten Copy Lyric
 // @namespace    LuckyWind
 // @version      1.0
-// @description  To copy lyric from UtaTen
+// @description  Add a button to copy lyric from UtaTen
 // @author       LuckyWind_sck
 // @include      https://utaten.com/lyric/*
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.12

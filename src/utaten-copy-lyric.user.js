@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Utaten Copy Lyric
 // @namespace    LuckyWind
-// @version      0.2
+// @version      1.0
 // @description  To copy lyric from UtaTen
 // @author       LuckyWind_sck
 // @include      https://utaten.com/lyric/*

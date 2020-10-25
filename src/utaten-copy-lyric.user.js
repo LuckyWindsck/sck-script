@@ -27,22 +27,11 @@
     return `${title}　${artist}${metadata}\n\n${lyric}`;
   };
 
-  const copyToClipboard = (text) => {
-    const temp = document.createElement('textarea');
-    document.body.appendChild(temp);
-    temp.appendChild(document.createTextNode(text));
-    temp.select();
-    document.execCommand('copy');
-    document.body.removeChild(temp);
-  };
-
-  const content = getCopyContent();
-
   const copyButton = document.createElement('a');
   copyButton.appendChild(document.createTextNode('歌詞をコピーする'));
   copyButton.classList.add('lnk_opinion');
   copyButton.style.cursor = 'pointer';
-  copyButton.addEventListener('click', () => copyToClipboard(content));
+  copyButton.addEventListener('click', () => navigator.clipboard.writeText(getCopyContent()));
 
   const lyricBody = document.querySelector('.lyricBody');
   lyricBody.insertBefore(document.createElement('br'), lyricBody.children[0]);

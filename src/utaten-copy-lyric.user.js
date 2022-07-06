@@ -10,7 +10,6 @@
 // @grant        none
 // ==/UserScript==
 
-/* global Vue */
 (() => {
   const getCopyContent = () => {
     const cloneLyricBody = document.querySelector('.lyricBody').cloneNode(true);

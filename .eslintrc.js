@@ -4,14 +4,27 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:vue/essential',
     'airbnb-base',
   ],
   parserOptions: {
     ecmaVersion: 12,
   },
-  plugins: [
-    'vue',
+  overrides: [
+    {
+      files: ['src/coderemixer-afk.user.js'],
+      extends: ['plugin:vue/essential'],
+      globals: {
+        Vue: 'readonly',
+        moment: 'readonly',
+      },
+    },
+    {
+      files: ['src/utaten-copy-lyric.user.js'],
+      extends: ['plugin:vue/essential'],
+      globals: {
+        Vue: 'readonly',
+      },
+    },
   ],
   rules: {
   },

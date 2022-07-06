@@ -11,7 +11,6 @@
 // @grant        none
 // ==/UserScript==
 
-/* global Vue, moment */
 (() => {
   const AFK = Vue.extend({
     data() {

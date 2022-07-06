@@ -12,8 +12,8 @@
 
 (() => {
   const getCopyContent = () => {
-    const cloneLyricBody = document.querySelector('.lyricBody').cloneNode(true);
-    cloneLyricBody.querySelectorAll('.ruby span.rt').forEach((rt) => rt.remove());
+    const cloneLyricBody = document.querySelector('.lyricBody').cloneNode(true)
+    cloneLyricBody.querySelectorAll('.ruby span.rt').forEach((rt) => rt.remove())
 
     // This failed because some title doesn't include "「」".
     // Example:
@@ -25,27 +25,27 @@
     //     .match(/「(?<title>.*?)」/)
     //     .groups
     // );
-    const title = document.querySelector('#contents > main > ol > li:nth-child(3) > span').innerText.slice(0, -2);
-    const artist = document.querySelector('.newLyricWork__name').innerText.trim();
+    const title = document.querySelector('#contents > main > ol > li:nth-child(3) > span').innerText.slice(0, -2)
+    const artist = document.querySelector('.newLyricWork__name').innerText.trim()
     const metadata = [...document.querySelector('.newLyricWork').children].reduce((str, { classList, innerText }) => {
-      if (classList.contains('newLyricWork__title')) return `${str}\n${innerText}`;
-      if (classList.contains('newLyricWork__body')) return [str, innerText].join('　');
-      return str;
-    }, '');
-    const lyric = cloneLyricBody.querySelector('.hiragana').innerText.trim();
+      if (classList.contains('newLyricWork__title')) return `${str}\n${innerText}`
+      if (classList.contains('newLyricWork__body')) return [str, innerText].join('　')
+      return str
+    }, '')
+    const lyric = cloneLyricBody.querySelector('.hiragana').innerText.trim()
 
-    return `${[title, artist].join('　')}${metadata}\n\n${lyric}`;
-  };
+    return `${[title, artist].join('　')}${metadata}\n\n${lyric}`
+  }
 
   const copyLyric = function copyLyric() {
-    navigator.clipboard.writeText(getCopyContent());
-  };
+    navigator.clipboard.writeText(getCopyContent())
+  }
 
   const CopyButton = Vue.extend({
     methods: { copyLyric },
     template: '<div><a @click="copyLyric" class="lnk_opinion" style="cursor:pointer;">歌詞をコピーする</a><br></div>',
-  });
+  })
 
-  const lyricBody = document.querySelector('.lyricBody');
-  lyricBody.insertBefore(new CopyButton().$mount().$el, lyricBody.children[0]);
-})();
+  const lyricBody = document.querySelector('.lyricBody')
+  lyricBody.insertBefore(new CopyButton().$mount().$el, lyricBody.children[0])
+})()

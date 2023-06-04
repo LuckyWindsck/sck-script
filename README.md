@@ -24,7 +24,7 @@ Open the user page of [Japan MapleStory EXP Ranking](https://maplestory.nexon.co
 
 ## Paiza Auto Setting
 
-Automatically setup the coding environment of [Paiza](https://paiza.jp/challenges)
+Automatically setup the coding environment of [Paiza](https://paiza.jp/challenges).
 
 <img width="978" alt="image" src="https://github.com/LuckyWindsck/sck-script/assets/24631178/623e1eb9-8e86-4bef-912b-a787b5974648">
 
